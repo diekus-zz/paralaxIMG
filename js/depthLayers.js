@@ -41,3 +41,8 @@ function imageDataTest(){
     //put the data back in
     ctx.putImageData(cd, 10,10);
 }
+
+//determines how bright is a color
+function brightness(r, g, b){
+    return Math.sqrt(.241*r*r + .691*g*g + .068*b*b);
+}
