@@ -1,7 +1,10 @@
 var cnv, ctx;
 var imgdepthmap, imgpicture;
 var cddepth, cdimage;
+<<<<<<< HEAD
 var near, far;
+=======
+>>>>>>> origin/master
 
 //init function after page is loaded
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -32,7 +35,10 @@ function createImages(myimage, mydepthmap){
         console.log('image loaded ...');
         ctx.drawImage(imgpicture, 0,0);
         cdimage = ctx.getImageData(0, 0, cnv.width, cnv.height);
+<<<<<<< HEAD
         createNewLayer();
+=======
+>>>>>>> origin/master
     });
 }
 
@@ -65,6 +71,13 @@ function between(x, a, b){
 }
 
 function runExample(near, far){
+<<<<<<< HEAD
     createImages('i/dog.png', 'i/dogdepthmap.png', createNewLayer);
     ctx.clearRect(0,0,cnv.width,cnv.height);
+=======
+    createImages('i/dog.png', 'i/dogdepthmap.png');
+    ctx.clearRect(0,0,cnv.width,cnv.height);
+    var nl = createNewLayer(cdimage,cddepth, near,far);
+    ctx.putImageData(nl,0,0);
+>>>>>>> origin/master
 }
