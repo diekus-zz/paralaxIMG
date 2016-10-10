@@ -3,8 +3,23 @@
 <head>
     <title></title>
     <script src="js/depthLayers.js"></script>
+    <link href="s/parallaximg.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
-    <canvas id="mycanvas"></canvas>
+    <header>
+        <img src="appLogo"/>
+        <h1>parallaxImg</h1>
+    </header>
+    <div>
+        <form>
+            <input id="file_depthmap" type="file" accept="image/*" class="fileSelector">
+            <input id="file_image" type="file" accept="image/*" class="fileSelector">
+        </form>
+    </div>
+    <div>
+        <canvas id="mycanvas"></canvas>
+    </div>
+    <footer></footer>
 </body>
 </html>

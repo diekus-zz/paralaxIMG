@@ -1,67 +1,45 @@
-var cnv, ctx, cd;
+var cnv, ctx;
+var imgdepthmap, imgpicture;
+var cddepth, cdimage;
+var near, far;
 
+//init function after page is loaded
 document.addEventListener("DOMContentLoaded", function(event) {
-    console.log("DOM fully loaded and parsed");
     initCanvas();
 });
 
-
+//initializes the canvas and the drawing element
 function initCanvas(){
     cnv = document.getElementById('mycanvas');
     ctx = cnv.getContext('2d');
     cnv.setAttribute('width', window.innerWidth);
     cnv.setAttribute('height', window.innerHeight);
-
-    drawCanvas();
 }
 
-function drawCanvas(){
-    // ctx.fillStyle = 'cornflowerblue';
-    // ctx.fillRect(10,10,100,100);
-    createImage();
-}
-
-function createImage(){
-    var imgdepthmap = new Image();
-    i.src = 'i/depthmaptest.png';
-    i.addEventListener('load', function(event){
-        ctx.drawImage(i, 0,0);
-        imageDataTest();
+//loads and creates in memory the needed images 
+function createImages(myimage, mydepthmap){
+    imgdepthmap = new Image();
+    imgdepthmap.src = mydepthmap;
+    imgdepthmap.addEventListener('load', function(event){
+        console.log('depth map loaded ...');
+        ctx.drawImage(imgdepthmap, 0,0);
+        cddepth = ctx.getImageData(0, 0, cnv.width, cnv.height);
     }); 
 
-    var imgpicture = new Image();
-    i.src = 'i/.png';
-    i.addEventListener('load', function(event){
-        ctx.drawImage(i, 0,0);
-        imageDataTest();
+    imgpicture = new Image();
+    imgpicture.src = myimage;
+    imgpicture.addEventListener('load', function(event){
+        console.log('image loaded ...');
+        ctx.drawImage(imgpicture, 0,0);
+        cdimage = ctx.getImageData(0, 0, cnv.width, cnv.height);
+        createNewLayer();
     });
-}
-
-function imageDataTest(){
-    cd = ctx.getImageData(0, 0, cnv.width, cnv.height);
-    console.log(cd);
-    for(i = 0; i < cd.data.length; i++){
-        if((i+1)%4==0) //alpha value
-            continue;
-        //cd.data[i] = (cd.data[i]+100)%255; //changes color
-    }
-    //put the data back in
-    //ctx.putImageData(cd, 10,10);
-    var nl = createNewLayer(cd, 100, 255);
-    ctx.putImageData(nl,0,0);
-}
-
-//determines how bright is a color
-function brightness(r, g, b){
-    return Math.sqrt(.241*r*r + .691*g*g + .068*b*b);
-}
-
-function between(x, a, b){
-    return a<=x && x<=b;
 }
 
 //creates a new layer of ImageData based on a brightness interval that allows  
 function createNewLayer(imageData, depthData, near, far){
+
+
     var newLayerData = new ImageData(depthData.width, depthData.height);
     //create a new canvas to paint the matching parts of the image
 
@@ -74,4 +52,19 @@ function createNewLayer(imageData, depthData, near, far){
         }
     }
     return newLayerData;
+}
+
+//determines how bright is a color
+function brightness(r, g, b){
+    return Math.sqrt(.241*r*r + .691*g*g + .068*b*b);
+}
+
+//determines if a x value is between or equal to a or b
+function between(x, a, b){
+    return a<=x && x<=b;
+}
+
+function runExample(near, far){
+    createImages('i/dog.png', 'i/dogdepthmap.png', createNewLayer);
+    ctx.clearRect(0,0,cnv.width,cnv.height);
 }

@@ -1,0 +1,12 @@
+body{
+    background-color: #3d3d3d;
+    color:#fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.fileSelector{
+    clear: both;
+    float:left;
+    margin: 10px;
+    width: 100%;
+}
